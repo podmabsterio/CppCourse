@@ -1,6 +1,6 @@
 #include "associative_operation.h"
 
-bool IsAssociative(const std::vector<std::vector<size_t>>& table) {
+bool IsAssociative(const std::vector<std::vector<size_t>> &table) {
     for (size_t x_elem = 0; x_elem < table.size(); ++x_elem) {
         if (table[x_elem].size() != table.size()) {
             return false;
