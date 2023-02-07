@@ -3,11 +3,9 @@
 
 bool CompareApplicants(const Applicant* a, const Applicant* b) {
     const int a_inverse_points = -a->points;
-    auto a_properties = std::tie(a_inverse_points, a->student.birth_date.year,
-                                 a->student.birth_date.month, a->student.birth_date.day, a->student.name);
+    auto a_properties = std::tie(a_inverse_points, a->student.birth_date.year, a->student.birth_date.month, a->student.birth_date.day, a->student.name);
     const int b_inverse_points = -b->points;
-    auto b_properties = std::tie(b_inverse_points, b->student.birth_date.year,
-                                 b->student.birth_date.month, b->student.birth_date.day, b->student.name);
+    auto b_properties = std::tie(b_inverse_points, b->student.birth_date.year, b->student.birth_date.month, b->student.birth_date.day, b->student.name);
     return a_properties < b_properties;
 }
 
