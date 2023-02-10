@@ -21,7 +21,7 @@ std::vector<std::string_view> Split(std::string_view path) {
     return split_path;
 }
 
-std::string NormalizePath(std::string_view current_working_dir, std::string_view path) {
+std::string RelativePath(std::string_view current_working_dir, std::string_view path) {
     auto dir_parts = Split(current_working_dir);
     auto path_parts = Split(path);
     for (auto part : path_parts) {
@@ -40,4 +40,11 @@ std::string NormalizePath(std::string_view current_working_dir, std::string_view
         return "/";
     }
     return normalized_path;
+}
+
+std::string NormalizePath(std::string_view current_working_dir, std::string_view path) {
+    if (path.empty() || path[0] != '/') {
+        return RelativePath(current_working_dir, path);
+    }
+    return RelativePath("", path);
 }
