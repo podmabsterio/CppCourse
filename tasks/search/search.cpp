@@ -55,10 +55,10 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     std::vector<std::pair<double, size_t> > tf_idf(documents_quantity, {0, 0});
     for (size_t i = 0; i < documents_quantity; ++i) {
         for (auto& [key, count] : count_query) {
-            double tf = static_cast<double>(count[i]) / word_count[i];
+            double tf = static_cast<double>(count[i]) / static_cast<double>(word_count[i]);
             double idf = 0;
             if (was_in_line[key] != 0) {
-                idf = std::log(static_cast<double>(documents_quantity) / was_in_line[key]);
+                idf = std::log(static_cast<double>(documents_quantity) / static_cast<double>(was_in_line[key]));
             }
             tf_idf[i].first += tf * idf;
             tf_idf[i].second = i;
