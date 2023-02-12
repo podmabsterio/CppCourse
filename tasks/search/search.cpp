@@ -52,7 +52,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             }
         }
     }
-    std::vector< std::pair<double, size_t> > tf_idf(documents_quantity, {0, 0});
+    std::vector<std::pair<double, size_t> > tf_idf(documents_quantity, {0, 0});
     for (size_t i = 0; i < documents_quantity; ++i) {
         for (auto& [key, count] : count_query) {
             double tf = static_cast<double>(count[i]) / word_count[i];
