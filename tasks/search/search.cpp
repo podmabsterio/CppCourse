@@ -3,6 +3,7 @@
 #include <cctype>
 #include <string>
 #include <cmath>
+#include <algorithm>
 
 std::vector<std::string_view> Search(std::string_view text, std::string_view query, size_t results_count) {
     std::unordered_map<std::string, std::vector<size_t> > count_query;
@@ -66,7 +67,10 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     }
     std::sort(tf_idf.rbegin(), tf_idf.rend());
     std::vector<std::string_view> response;
-    for (size_t i = 0; i < results_count; ++i) {
+    for (size_t i = 0; i < results_count && i < tf_idf.size(); ++i) {
+        if (tf_idf[i].first <= 0) {
+            break;
+        }
         response.emplace_back(lines[tf_idf[i].second]);
     }
     return response;
