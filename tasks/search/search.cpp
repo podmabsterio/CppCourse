@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <cctype>
 #include <string>
+#include <cmath>
 
 std::vector<std::string_view> Search(std::string_view text, std::string_view query, size_t results_count) {
     std::unordered_map<std::string, std::vector<size_t> > count_query;
@@ -57,7 +58,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             double tf = static_cast<double>(count[i]) / word_count[i];
             double idf = 0;
             if (was_in_line[key] != 0) {
-                idf = log(static_cast<double>(documents_quantity) / was_in_line[key]);
+                idf = std::log(static_cast<double>(documents_quantity) / was_in_line[key]);
             }
             tf_idf[i].first += tf * idf;
             tf_idf[i].second = i;
