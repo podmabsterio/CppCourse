@@ -80,7 +80,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     }
     std::vector<std::pair<long double, size_t>> tf_idf(lines_quantity, {0, 0});
     for (size_t i = 0; i < lines_quantity; ++i) {
-        tf_idf[i].second = i;
+        tf_idf[i].second = -i;
         for (auto& [word, count] : quantity_met_in_line) {
             long double tf = static_cast<long double>(count[i]) / static_cast<long double>(count_words[i]);
             tf_idf[i].first += tf * idf[word];
@@ -92,7 +92,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
         if (tf_idf[i].first < EPS) {
             break;
         }
-        response.emplace_back(split_text[tf_idf[i].second]);
+        response.emplace_back(split_text[-tf_idf[i].second]);
     }
     return response;
 }
