@@ -4,6 +4,9 @@
 #include <string>
 #include <cmath>
 #include <algorithm>
+#include <type_traits>
+
+using SignedSizeT = std::make_signed_t<std::size_t>;
 
 const long double EPS = 1e-12;
 
@@ -82,8 +85,8 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             idf[word] = std::log(static_cast<long double>(lines_quantity) / static_cast<long double>(count));
         }
     }
-    std::vector<std::pair<long double, size_t>> tf_idf(lines_quantity, {0, 0});
-    for (size_t i = 0; i < lines_quantity; ++i) {
+    std::vector<std::pair<long double, SignedSizeT>> tf_idf(lines_quantity, {0, 0});
+    for (SignedSizeT i = 0; i < lines_quantity; ++i) {
         tf_idf[i].second = -i;
         for (auto& [word, count] : quantity_met_in_line) {
             long double tf = static_cast<long double>(count[i]) / static_cast<long double>(count_words[i]);
