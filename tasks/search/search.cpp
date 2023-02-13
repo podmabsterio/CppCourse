@@ -86,7 +86,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             tf_idf[i].first += tf * idf[word];
         }
     }
-    std::sort(tf_idf.rbegin(), tf_idf.rend());
+    std::stable_sort(tf_idf.rbegin(), tf_idf.rend());
     std::vector<std::string_view> response;
     for (size_t i = 0; i < results_count && i < lines_quantity; ++i) {
         if (tf_idf[i].first < EPS) {
