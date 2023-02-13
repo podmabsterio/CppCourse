@@ -66,8 +66,12 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             auto normalized_word = StringToLower(word);
             ++count_words[i];
             if (count_used_in_line.count(normalized_word)) {
-                ++count_used_in_line[normalized_word];
                 ++quantity_met_in_line[normalized_word][i];
+            }
+        }
+        for (auto& [query_word, count] : quantity_met_in_line) {
+            if (count[i] > 0) {
+                ++count_used_in_line[query_word];
             }
         }
     }
