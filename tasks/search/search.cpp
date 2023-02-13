@@ -53,7 +53,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
     const size_t lines_quantity = split_text.size();
     std::unordered_map<std::string, std::vector<size_t>> quantity_met_in_line;
 
-    for (auto word: split_query) {
+    for (auto word : split_query) {
         auto normalized_word = StringToLower(word);
         count_used_in_line[normalized_word] = 0;
         quantity_met_in_line[normalized_word].assign(lines_quantity, 0);
@@ -76,7 +76,7 @@ std::vector<std::string_view> Search(std::string_view text, std::string_view que
             idf[word] = std::log(static_cast<long double>(lines_quantity) / static_cast<long double>(count));
         }
     }
-    std::vector<std::pair<long double, size_t> > tf_idf(lines_quantity, {0, 0});
+    std::vector<std::pair<long double, size_t>> tf_idf(lines_quantity, {0, 0});
     for (size_t i = 0; i < lines_quantity; ++i) {
         tf_idf[i].second = i;
         for (auto& [word, count] : quantity_met_in_line) {
