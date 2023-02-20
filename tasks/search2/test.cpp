@@ -26,3 +26,11 @@ TEST_CASE("Search") {
 
     REQUIRE(expected == search_engine.Search(query, 1));
 }
+
+TEST_CASE("Search2") {
+    const std::string_view query = "typesetting release";
+    const std::vector<std::string_view> expected = {};
+
+    SearchEngine search_engine;
+    REQUIRE(expected == search_engine.Search(query, 1));
+}

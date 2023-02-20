@@ -1,1 +1,103 @@
 #include "search.h"
+#include <unordered_map>
+#include <cctype>
+#include <string>
+#include <cmath>
+#include <algorithm>
+#include <type_traits>
+
+using SignedSizeT = std::make_signed_t<std::size_t>;
+
+const long double EPS = 1e-12;
+
+void SearchEngine::BuildIndex(std::string_view text) {
+    lines_.clear();
+    auto line_begin = text.begin();
+    bool have_words = false;
+    for (auto it = text.begin(); it != text.end(); ++it) {
+        if (*it == '\n') {
+            line_begin = it + 1;
+            have_words = false;
+        }
+        if (isalpha(*it)) {
+            have_words = true;
+        }
+        if (have_words && it >= line_begin && (it + 1 == text.end() || *(it + 1) == '\n')) {
+            lines_.emplace_back(line_begin, it - line_begin + 1);
+        }
+    }
+}
+
+std::vector<std::string_view> SplitByWords(std::string_view line) {
+    std::vector<std::string_view> words;
+    auto word_begin = line.begin();
+    for (auto it = line.begin(); it != line.end(); ++it) {
+        if (!isalpha(*it)) {
+            word_begin = it + 1;
+        }
+        if (it >= word_begin && (it + 1 == line.end() || !isalpha(*(it + 1)))) {
+            words.emplace_back(word_begin, it - word_begin + 1);
+        }
+    }
+    return words;
+}
+
+std::string StringToLower(std::string_view word) {
+    std::string normalized;
+    for (auto letter : word) {
+        normalized.push_back(static_cast<char>(tolower(letter)));
+    }
+    return normalized;
+}
+
+std::vector<std::string_view> SearchEngine::Search(std::string_view query, size_t results_count) const {
+    auto split_query = SplitByWords(query);
+    std::unordered_map<std::string, size_t> count_used_in_line;
+    const size_t lines_quantity = lines_.size();
+    std::unordered_map<std::string, std::vector<size_t>> quantity_met_in_line;
+
+    for (auto word : split_query) {
+        auto normalized_word = StringToLower(word);
+        count_used_in_line[normalized_word] = 0;
+        quantity_met_in_line[normalized_word].assign(lines_quantity, 0);
+    }
+    std::vector<size_t> count_words(lines_quantity, 0);
+    for (size_t i = 0; i < lines_.size(); ++i) {
+        for (auto word : SplitByWords(lines_[i])) {
+            auto normalized_word = StringToLower(word);
+            ++count_words[i];
+            if (count_used_in_line.count(normalized_word)) {
+                ++quantity_met_in_line[normalized_word][i];
+            }
+        }
+        for (auto& [query_word, count] : quantity_met_in_line) {
+            if (count[i] > 0) {
+                ++count_used_in_line[query_word];
+            }
+        }
+    }
+    std::unordered_map<std::string, long double> idf;
+    for (auto& [word, count] : count_used_in_line) {
+        idf[word] = 0;
+        if (count != 0) {
+            idf[word] = std::log(static_cast<long double>(lines_quantity) / static_cast<long double>(count));
+        }
+    }
+    std::vector<std::pair<long double, SignedSizeT>> tf_idf(lines_quantity, {0, 0});
+    for (SignedSizeT i = 0; i < lines_quantity; ++i) {
+        tf_idf[i].second = -i;
+        for (auto& [word, count] : quantity_met_in_line) {
+            long double tf = static_cast<long double>(count[i]) / static_cast<long double>(count_words[i]);
+            tf_idf[i].first += tf * idf[word];
+        }
+    }
+    std::stable_sort(tf_idf.rbegin(), tf_idf.rend());
+    std::vector<std::string_view> response;
+    for (size_t i = 0; i < results_count && i < lines_quantity; ++i) {
+        if (tf_idf[i].first < EPS) {
+            break;
+        }
+        response.emplace_back(lines_[-tf_idf[i].second]);
+    }
+    return response;
+}
