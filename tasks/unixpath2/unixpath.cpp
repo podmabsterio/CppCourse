@@ -106,4 +106,3 @@ std::string UnixPath::GetRelativePath() const {
     }
     return RelativePathToString(normalized_path);
 }
-
