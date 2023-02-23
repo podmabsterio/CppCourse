@@ -1,7 +1,6 @@
 #include "unixpath.h"
 #include <vector>
 
-
 std::vector<std::string_view> Split_string_view(std::string_view path) {
     std::vector<std::string_view> split_path;
     size_t part_length = 0;
