@@ -1,7 +1,7 @@
 #include "unixpath.h"
 #include <vector>
 
-std::vector<std::string_view> Split_string_view(std::string_view path) {
+std::vector<std::string_view> SplitStringView(std::string_view path) {
     std::vector<std::string_view> split_path;
     size_t part_length = 0;
     auto part_begin = path.begin();
@@ -21,7 +21,7 @@ std::vector<std::string_view> Split_string_view(std::string_view path) {
     return split_path;
 }
 
-std::vector<std::string> Split_string(const std::string_view& path) {
+std::vector<std::string> SplitString(const std::string_view& path) {
     std::vector<std::string> split_path;
     std::string part;
     for (size_t i = 0; i < path.size(); ++i) {
@@ -38,7 +38,7 @@ std::vector<std::string> Split_string(const std::string_view& path) {
 }
 
 std::vector<std::string> FromRelativeToAbsolute(std::vector<std::string> root_dir, std::string_view path) {
-    auto path_parts = Split_string_view(path);
+    auto path_parts = SplitStringView(path);
     for (auto part : path_parts) {
         if (part == ".." && !root_dir.empty()) {
             root_dir.pop_back();
@@ -73,7 +73,7 @@ std::string RelativePathToString(const std::vector<std::string>& path) {
     return representation;
 }
 
-UnixPath::UnixPath(std::string_view initial_dir) : root_dir_(Split_string(initial_dir)), current_path_(root_dir_) {
+UnixPath::UnixPath(std::string_view initial_dir) : root_dir_(SplitString(initial_dir)), current_path_(root_dir_) {
 }
 
 void UnixPath::ChangeDirectory(std::string_view path) {
