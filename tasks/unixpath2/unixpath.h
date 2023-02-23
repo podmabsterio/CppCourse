@@ -2,6 +2,7 @@
 
 #include <string>
 #include <string_view>
+#include <vector>
 
 class UnixPath {
 public:
@@ -11,4 +12,8 @@ public:
 
     std::string GetAbsolutePath() const;
     std::string GetRelativePath() const;
+
+private:
+    std::vector<std::string> root_dir_;
+    std::vector<std::string> current_path_;
 };
