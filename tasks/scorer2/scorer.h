@@ -16,7 +16,7 @@ struct TaskStatus {
     bool merge_closed = true;
 };
 
-using InfoTable = std::unordered_map<std::string, std::unordered_map<std::string, TaskStatus> >;
+using InfoTable = std::unordered_map<std::string, std::unordered_map<std::string, TaskStatus>>;
 
 class Scorer {
 public:
