@@ -27,6 +27,7 @@ public:
     void Reset();
 
     ScoreTable GetScoreTable() const;
+
 private:
     InfoTable table_;
 
