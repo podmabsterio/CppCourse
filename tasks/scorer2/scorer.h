@@ -31,5 +31,7 @@ public:
 private:
     InfoTable table_;
 
-    void Cleaner(const StudentName& student_name, const TaskName& task_name);
+    ScoreTable complete_table_;
+
+    void AddAndClean(const StudentName& student_name, const TaskName& task_name);
 };
