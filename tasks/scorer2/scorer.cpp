@@ -32,12 +32,12 @@ void Scorer::OnCheckSuccess(const StudentName& student_name, const TaskName& tas
 }
 
 void Scorer::OnMergeRequestClosed(const StudentName& student_name, const TaskName& task_name) {
-    table_[student_name][task_name].merge_closed = false;
+    table_[student_name][task_name].merge_closed = true;
     this->AddAndClean(student_name, task_name);
 }
 
 void Scorer::OnMergeRequestOpen(const StudentName& student_name, const TaskName& task_name) {
-    table_[student_name][task_name].merge_closed = true;
+    table_[student_name][task_name].merge_closed = false;
     this->AddAndClean(student_name, task_name);
 }
 
