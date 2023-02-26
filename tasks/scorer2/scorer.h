@@ -4,11 +4,19 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 using StudentName = std::string;
 using TaskName = std::string;
 
 using ScoreTable = std::map<StudentName, std::set<TaskName>>;
+
+struct TaskStatus {
+    bool cl_success = false;
+    bool merge_closed = true;
+};
+
+using InfoTable = std::unordered_map<std::string, std::unordered_map<std::string, TaskStatus>>;
 
 class Scorer {
 public:
@@ -19,4 +27,11 @@ public:
     void Reset();
 
     ScoreTable GetScoreTable() const;
+
+private:
+    InfoTable table_;
+
+    ScoreTable complete_table_;
+
+    void AddAndClean(const StudentName& student_name, const TaskName& task_name);
 };
