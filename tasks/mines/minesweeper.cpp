@@ -165,12 +165,12 @@ char CellToChar(Minesweeper::CellStatus cell) {
 
 Minesweeper::RenderedField Minesweeper::RenderField() const {
     RenderedField representation;
-    for (size_t i = 0; i < field_.size(); ++i) {
+    for (auto& line : field_) {
         representation.emplace_back("");
-        for (size_t j = 0; j < field_[i].size(); ++j) {
-            if (field_[i][j].open or status_ == GameStatus::DEFEAT) {
-                representation.back() += CellToChar(field_[i][j]);
-            } else if (field_[i][j].marked) {
+        for (auto cell : line) {
+            if (cell.open or status_ == GameStatus::DEFEAT) {
+                representation.back() += CellToChar(cell);
+            } else if (cell.marked) {
                 representation.back() += '?';
             } else {
                 representation.back() += '-';
