@@ -25,7 +25,7 @@ void Minesweeper::AroundMine(std::size_t y, std::size_t x) {
     }
 }
 
- bool Minesweeper::IsCorrectCell(const Minesweeper::Cell& cell) {
+bool Minesweeper::IsCorrectCell(const Minesweeper::Cell& cell) {
     return cell.y < field_.size() and cell.x < field_[0].size();
 }
 
@@ -51,7 +51,7 @@ Minesweeper::Minesweeper(size_t width, size_t height, size_t mines_count)
     }
 }
 
-Minesweeper::Minesweeper(size_t width, size_t height, const std::vector<Cell> &cells_with_mines)
+Minesweeper::Minesweeper(size_t width, size_t height, const std::vector<Cell>& cells_with_mines)
     : field_(GameField(height, std::vector<CellStatus>(width))) {
 
     status_ = GameStatus::NOT_STARTED;
