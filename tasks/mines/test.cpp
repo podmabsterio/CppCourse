@@ -1,4 +1,5 @@
 #include <catch.hpp>
+#include <iostream>
 
 #include "minesweeper.h"
 
@@ -6,7 +7,6 @@ TEST_CASE("Minesweeper") {
     // *211....
     // 12*1....
     // .111....
-
     Minesweeper minesweeper(8, 3, {{.x = 0, .y = 0}, {.x = 2, .y = 1}});
 
     {
