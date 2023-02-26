@@ -15,7 +15,7 @@ size_t CorrectDecrement(size_t coordinate) {
     return correct;
 }
 
-void Minesweeper::AroundMine(std::size_t y, std::size_t  x) {
+void Minesweeper::AroundMine(std::size_t y, std::size_t x) {
     for (auto i = CorrectDecrement(x); i <= x + 1; ++i) {
         for (auto j = CorrectDecrement(y); j <= y + 1; ++j) {
             if (IsCorrectCell(Cell{i, j})) {
@@ -25,23 +25,12 @@ void Minesweeper::AroundMine(std::size_t y, std::size_t  x) {
     }
 }
 
-//void Minesweeper::MakeBorders() {
-//    for (size_t i = 0; i < field_.size(); ++i) {
-//        field_[i][0].number = 1;
-//        field_[i].back().number = 1;
-//    }
-//    for (size_t i = 0; i < field_[0].size(); ++i) {
-//        field_[0][i].number = 1;
-//        field_.back()[i].number = 1;
-//    }
-//}
-
-bool Minesweeper::IsCorrectCell(const Minesweeper::Cell& cell) {
+ bool Minesweeper::IsCorrectCell(const Minesweeper::Cell& cell) {
     return cell.y < field_.size() and cell.x < field_[0].size();
 }
 
-Minesweeper::Minesweeper(size_t width, size_t height, size_t mines_count) :
-      field_(GameField(height, std::vector<CellStatus>(width))) {
+Minesweeper::Minesweeper(size_t width, size_t height, size_t mines_count)
+    : field_(GameField(height, std::vector<CellStatus>(width))) {
 
     status_ = GameStatus::NOT_STARTED;
     cells_left_ = width * height;
@@ -49,8 +38,8 @@ Minesweeper::Minesweeper(size_t width, size_t height, size_t mines_count) :
     std::vector<bool> generator(std::min(width * height, mines_count), true);
     generator.resize(width * height, false);
 
-    auto seed = std::random_device {};
-    auto random_engine = std::default_random_engine { seed() };
+    auto seed = std::random_device{};
+    auto random_engine = std::default_random_engine{seed()};
     std::shuffle(std::begin(generator), std::end(generator), random_engine);
 
     for (size_t i = 0; i < generator.size(); ++i) {
@@ -62,8 +51,8 @@ Minesweeper::Minesweeper(size_t width, size_t height, size_t mines_count) :
     }
 }
 
-Minesweeper::Minesweeper(size_t width, size_t height, const std::vector<Cell> &cells_with_mines) :
-      field_(GameField(height, std::vector<CellStatus>(width))) {
+Minesweeper::Minesweeper(size_t width, size_t height, const std::vector<Cell> &cells_with_mines)
+    : field_(GameField(height, std::vector<CellStatus>(width))) {
 
     status_ = GameStatus::NOT_STARTED;
     cells_left_ = width * height;

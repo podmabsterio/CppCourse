@@ -56,8 +56,7 @@ private:
     void GameStart();
     void GameEnd();
 
-    void AroundMine(std::size_t x, std::size_t  y);
-    void MakeBorders();
+    void AroundMine(std::size_t y, std::size_t x);
 
     bool IsCorrectCell(const Cell& cell);
 };
