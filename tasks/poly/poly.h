@@ -26,6 +26,7 @@ public:
     void operator+=(const Poly& other);
     void operator-=(const Poly& other);
     Poly operator*(const Poly& other);
+    void operator*=(const Poly& other);
 
     std::string Representation() const;
 

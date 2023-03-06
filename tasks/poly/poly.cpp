@@ -120,6 +120,10 @@ Poly Poly::operator*(const Poly& other) {
     return result;
 }
 
+void Poly::operator*=(const Poly& other) {
+    *this = *this * other;
+}
+
 std::string Poly::Representation() const{
     std::string result = "y = " + MonomialToString({poly_.begin()->first, poly_.begin()->second});
     for (auto it = poly_.begin(); it != poly_.end(); ++it) {
@@ -133,7 +137,7 @@ std::string Poly::Representation() const{
         if (it->second < 0) {
             sign = " - ";
         }
-        result += sign + MonomialToString({it->first, abs(it->second)});
+        result += sign + MonomialToString({it->first, std::abs(it->second)});
     }
     return result;
 }
