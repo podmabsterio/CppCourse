@@ -1,4 +1,5 @@
 #include <catch.hpp>
+#include <iostream>
 
 #include "poly.h"
 
@@ -28,6 +29,7 @@ TEST_CASE("Poly") {
 
     REQUIRE(Poly({{0, -1}, {2, -3}}) == -poly2);
 
+
     std::stringstream string_stream;
     std::ostream& stream = string_stream;
     stream << poly1 << ", " << poly0 << ", " << -poly1;
@@ -44,5 +46,4 @@ TEST_CASE("Poly") {
     std::ostream& stream2 = string_stream2;
     stream2 << poly4;
     REQUIRE("y = 1x^2" == string_stream2.str());
-
 }
