@@ -14,8 +14,8 @@ public:
     explicit Poly();
     explicit Poly(const std::vector<int64_t>& coefficients);
     explicit Poly(const std::vector<Monomial>& monomials);
-    explicit Poly(std::initializer_list<Monomial> monomials);
-    explicit Poly(std::initializer_list<int64_t> coefficients);
+    Poly(std::initializer_list<Monomial> monomials);
+    Poly(std::initializer_list<int64_t> coefficients);
 
     int64_t operator()(int64_t value) const;
     bool operator==(const Poly& other) const;
