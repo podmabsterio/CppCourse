@@ -9,7 +9,7 @@ int64_t IntegerPower(const int64_t base, const int64_t exp) {
         return IntegerPower(base, exp / 2) * IntegerPower(base, exp / 2);
     }
     return base * IntegerPower(base, exp - 1);
-}
+}  // namespace
 
 std::string MonomialToString(Poly::Monomial monomial) {
     std::string result;
@@ -124,7 +124,7 @@ void Poly::operator*=(const Poly& other) {
     *this = *this * other;
 }
 
-std::string Poly::Representation() const{
+std::string Poly::Representation() const {
     std::string result = "y = " + MonomialToString({poly_.begin()->first, poly_.begin()->second});
     for (auto it = poly_.begin(); it != poly_.end(); ++it) {
         if (it == poly_.begin()) {
