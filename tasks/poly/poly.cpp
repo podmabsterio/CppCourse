@@ -9,7 +9,7 @@ int64_t IntegerPower(const int64_t base, const int64_t exp) {
         return IntegerPower(base, exp / 2) * IntegerPower(base, exp / 2);
     }
     return base * IntegerPower(base, exp - 1);
-}  // namespace
+}
 
 std::string MonomialToString(Poly::Monomial monomial) {
     std::string result;
@@ -22,7 +22,7 @@ std::string MonomialToString(Poly::Monomial monomial) {
     }
     return result;
 }
-}
+}  // namespace
 
 Poly::Poly() {
     poly_[0];
