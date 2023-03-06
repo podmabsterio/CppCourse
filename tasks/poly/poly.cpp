@@ -99,6 +99,7 @@ Poly Poly::operator-() const {
     for (auto [power, coefficient] : poly_) {
         result.poly_[power] = -coefficient;
     }
+    result.Normalize();
     return result;
 }
 
@@ -117,6 +118,7 @@ Poly Poly::operator*(const Poly& other) {
             result.poly_[power_this + power_other] += coefficient_this * coefficient_other;
         }
     }
+    result.Normalize();
     return result;
 }
 
