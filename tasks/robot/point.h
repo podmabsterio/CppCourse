@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstddef>
-#include <utility>
+#include <functional>
 
 struct Point {
     size_t x = 0;
