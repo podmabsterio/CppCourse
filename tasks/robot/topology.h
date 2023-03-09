@@ -14,7 +14,7 @@ public:
     virtual std::vector<Point> GetNeighbours(const Point& point) const = 0;
     Distance MeasureDistance(const Point& from, const Point& to) const;
 
-    static const Distance UNREACHABLE = -1;
+    const static Distance UNREACHABLE = -1;
 
     Topology() = delete;
     explicit Topology(TrapsField);
