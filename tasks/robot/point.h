@@ -14,15 +14,11 @@ struct Point {
     }
 };
 
-//namespace std {
-//template<>
-//struct hash<Point> {
-//    size_t operator()(const Point& point) const {
-//        return point.x + point.y * HASH_SEPARATOR;
-//    }
-//};
-//}  // namespace std
-
-size_t PointHash(const Point& point) {
-    return point.x + point.y * HASH_SEPARATOR;
-}
+namespace std {
+template<>
+struct hash<Point> {
+    size_t operator()(const Point& point) const {
+        return point.x + point.y * HASH_SEPARATOR;
+    }
+};
+}  // namespace std
