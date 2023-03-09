@@ -5,6 +5,7 @@
 
 #include <exception>
 #include <unordered_map>
+#include <memory>
 
 class World {
 public:
@@ -19,4 +20,10 @@ public:
     const Point& GetCurrentPosition() const;
 
     void Move(const Point& to);
+
+private:
+    const Topology& topology_;
+    Point start_;
+    Point end_;
+    Point current_position_;
 };
