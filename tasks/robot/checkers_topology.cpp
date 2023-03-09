@@ -17,7 +17,7 @@ std::vector<Point> CheckersTopology::GetNeighbours(const Point& point) const {
         }
     }
 
-    std::unordered_set<Point> processed;
+    std::unordered_set<Point, HashPoint> processed;
     std::queue<Point> not_processed;
     not_processed.push(point);
     processed.insert(point);

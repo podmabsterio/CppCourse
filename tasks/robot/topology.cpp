@@ -46,7 +46,7 @@ Topology::Distance Topology::MeasureDistance(const Point& from, const Point& to)
     Topology::DistanceMap distance_map(map_.field_.size(), std::vector<Distance>(map_.field_[0].size(), 0));
     not_processed.push(to);
     bool reachable = false;
-    std::unordered_map<Point, bool> used;
+    std::unordered_map<Point, bool, HashPoint> used;
     used[to] = true;
     while (!not_processed.empty() && !reachable) {
         Point current = not_processed.front();

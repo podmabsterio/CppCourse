@@ -13,7 +13,7 @@ public:
 
     World(const Topology& topology, Point start, Point end);
 
-    std::unordered_map<Point, Topology::Distance> Lookup() const;
+    std::unordered_map<Point, Topology::Distance, HashPoint> Lookup() const;
 
     const Point& GetStart() const;
     const Point& GetEnd() const;
