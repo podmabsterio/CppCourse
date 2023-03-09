@@ -18,8 +18,8 @@ const Point& World::GetCurrentPosition() const {
     return current_position_;
 }
 
-std::unordered_map<Point, Topology::Distance, HashPoint> World::Lookup() const {
-    std::unordered_map<Point, Topology::Distance, HashPoint> result;
+std::unordered_map<Point, Topology::Distance> World::Lookup() const {
+    std::unordered_map<Point, Topology::Distance> result;
     for (auto& neighbor : topology_.GetNeighbours(current_position_)) {
         result[neighbor] = topology_.MeasureDistance(neighbor, end_);
     }
