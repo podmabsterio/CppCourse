@@ -32,11 +32,11 @@ std::vector<std::vector<bool>> ParseMap(const std::vector<std::string>& text_map
      REQUIRE(unique_points.size() == path.size());
 
      if (path.empty()) {
-         REQUIRE(topology.MeasureDistance(world.GetStart(), world.GetEnd()) == -1);
+         REQUIRE(topology.MeasureDistance(world.GetStart(), world.GetEnd()) == Topology::UNREACHABLE);
          return;
      }
 
-     if (topology.MeasureDistance(world.GetStart(), world.GetEnd()) == -1) {
+     if (topology.MeasureDistance(world.GetStart(), world.GetEnd()) == Topology::UNREACHABLE) {
          REQUIRE(path.empty());
      }
 
