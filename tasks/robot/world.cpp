@@ -2,8 +2,8 @@
 
 #include <algorithm>
 
-World::World(const Topology& topology, Point start, Point end) :
-      topology_(topology), start_(start), end_(end), current_position_(start) {
+World::World(const Topology& topology, Point start, Point end)
+    : topology_(topology), start_(start), end_(end), current_position_(start) {
 }
 
 const Point& World::GetStart() const {

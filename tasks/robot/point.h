@@ -15,7 +15,7 @@ struct Point {
 namespace std {
 static const size_t HASH_SEPARATOR = 1000000007;
 
-template<>
+template <>
 struct hash<Point> {
     size_t operator()(const Point& point) const {
         return point.x + point.y * HASH_SEPARATOR;
