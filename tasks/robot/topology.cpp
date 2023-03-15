@@ -19,7 +19,7 @@ size_t Topology::Field::SizeX() const {
     return field_[0].size();
 }
 
-bool Topology::Field::IsInBound(Point point, int8_t dif_x, int8_t dif_y) const {
+bool Topology::Field::IsInBound(Point point, int dif_x, int dif_y) const {
     if (dif_x < 0 && point.x < static_cast<size_t>(-dif_x)) {
         return false;
     }

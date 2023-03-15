@@ -29,7 +29,7 @@ protected:
         explicit Field(TrapsField);
 
         bool IsObstacle(const Point&) const;
-        bool IsInBound(Point point, int8_t dif_x, int8_t dif_y) const;
+        bool IsInBound(Point point, int dif_x, int dif_y) const;
         size_t SizeY() const;
         size_t SizeX() const;
     };
