@@ -9,6 +9,7 @@
 #include "world.h"
 
 #include <algorithm>
+#include <iostream>
 #include <unordered_set>
 
 namespace {
@@ -26,32 +27,32 @@ std::vector<std::vector<bool>> ParseMap(const std::vector<std::string>& text_map
     return bool_map;
 }
 
-void RequirePathIsValid(const robot::Path& path, const World& world, const Topology& topology) {
-    std::unordered_set<Point> unique_points(path.begin(), path.end());
-    REQUIRE(unique_points.size() == path.size());
+ void RequirePathIsValid(const robot::Path& path, const World& world, const Topology& topology) {
+     std::unordered_set<Point> unique_points(path.begin(), path.end());
+     REQUIRE(unique_points.size() == path.size());
 
-    if (path.empty()) {
-        REQUIRE(topology.MeasureDistance(world.GetStart(), world.GetEnd()) == Topology::UNREACHABLE);
-        return;
-    }
+     if (path.empty()) {
+         REQUIRE(topology.MeasureDistance(world.GetStart(), world.GetEnd()) == Topology::UNREACHABLE);
+         return;
+     }
 
-    if (topology.MeasureDistance(world.GetStart(), world.GetEnd()) == Topology::UNREACHABLE) {
-        REQUIRE(path.empty());
-    }
+     if (topology.MeasureDistance(world.GetStart(), world.GetEnd()) == Topology::UNREACHABLE) {
+         REQUIRE(path.empty());
+     }
 
-    REQUIRE(path.front() == world.GetStart());
-    REQUIRE(path.back() == world.GetEnd());
+     REQUIRE(path.front() == world.GetStart());
+     REQUIRE(path.back() == world.GetEnd());
 
-    if (world.GetStart() == world.GetEnd()) {
-        REQUIRE(path.size() == 1);
-    }
+     if (world.GetStart() == world.GetEnd()) {
+         REQUIRE(path.size() == 1);
+     }
 
-    for (size_t i = 1; i < path.size(); ++i) {
-        REQUIRE(topology.MeasureDistance(path[i - 1], path[i]) == 1);
-    }
-}
+     for (size_t i = 1; i < path.size(); ++i) {
+         REQUIRE(topology.MeasureDistance(path[i - 1], path[i]) == 1);
+     }
+ }
 
-}  // namespace
+ }  // namespace
 
 TEST_CASE("RobotPlanar") {
     {
@@ -177,6 +178,17 @@ TEST_CASE("RobotCheckers") {
 }
 
 TEST_CASE("RobotKnight") {
+    {
+        const auto& map = ParseMap({
+            "...."
+        });
+
+        KnightTopology topology(map);
+        World world(topology, Point{.x = 0, .y = 0}, Point{.x = 3, .y = 0});
+        const auto& path = robot::FindPath(world);
+
+        RequirePathIsValid(path, world, topology);
+    }
     {
         const auto& map = ParseMap({
             ".*.",
