@@ -30,8 +30,8 @@ bool Topology::Field::IsInBound(Point point, int8_t dif_x, int8_t dif_y) const {
                       point.x > field_[0].size() - static_cast<size_t>(dif_x) - 1)) {
         return false;
     }
-    if (dif_y > 0 && (field_.size() <= static_cast<size_t>(dif_y) ||
-                      point.y > field_.size() - static_cast<size_t>(dif_y) - 1)) {
+    if (dif_y > 0 &&
+        (field_.size() <= static_cast<size_t>(dif_y) || point.y > field_.size() - static_cast<size_t>(dif_y) - 1)) {
         return false;
     }
     return true;
