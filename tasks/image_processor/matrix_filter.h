@@ -4,7 +4,7 @@
 
 class MatrixFilter : public Filter {
 public:
-    using SignedSizeT = std::make_signed<std::size_t>;
+    using SignedSizeT = std::make_signed_t<std::size_t>;
 
     using Matrix = std::vector<std::vector<int64_t> >;
 
