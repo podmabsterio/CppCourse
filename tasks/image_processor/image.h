@@ -17,6 +17,7 @@ public:
     const ColorLine& operator[](size_t index) const;
 
     void ConsoleRepr();
+
 private:
     Map field_;
     size_t height_ = 0;

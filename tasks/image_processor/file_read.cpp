@@ -6,7 +6,7 @@ namespace {
 size_t PaddingSize(size_t pixel_count) {
     return (FileRead::ALIGNMENT - (pixel_count % FileRead::ALIGNMENT)) % FileRead::ALIGNMENT;
 }
-}
+}  // namespace
 
 Image FileRead::ReadFile() {
     fin_.open(path_, std::ios::binary);
@@ -37,7 +37,6 @@ Image FileRead::ReadFile() {
         }
         SkipPart(PaddingSize(pixel_in_row));
     }
-    
     fin_.close();
     return result;
 }

@@ -14,15 +14,14 @@ size_t Normalize(size_t pos, MatrixFilter::SignedSizeT dif, size_t boarder) {
 int16_t GetInBoarder(int64_t value) {
     return static_cast<int16_t>(std::max(static_cast<int64_t>(0), std::min(COLOR_MAX, value)));
 }
-}
+}  // namespace
 
 Color<int16_t> MatrixFilter::MatrixValue(const Image& image, size_t pos_h, size_t pos_w) {
     SignedSizeT balance = static_cast<SignedSizeT>(GetMatrix().size() / 2);
     Color<int64_t> result;
     for (SignedSizeT i = -balance; i <= balance; ++i) {
         for (SignedSizeT j = -balance; j <= balance; ++j) {
-            const auto& current_pixel = image[Normalize(pos_h, i, image.Height())]
-                                             [Normalize(pos_w, j, image.Width())];
+            const auto& current_pixel = image[Normalize(pos_h, i, image.Height())][Normalize(pos_w, j, image.Width())];
             result.Red += current_pixel.Red * GetMatrix()[i + balance][j + balance];
             result.Green += current_pixel.Green * GetMatrix()[i + balance][j + balance];
             result.Blue += current_pixel.Blue * GetMatrix()[i + balance][j + balance];
@@ -30,7 +29,6 @@ Color<int16_t> MatrixFilter::MatrixValue(const Image& image, size_t pos_h, size_
     }
     return {GetInBoarder(result.Red), GetInBoarder(result.Green), GetInBoarder(result.Blue)};
 }
-
 
 Image MatrixFilter::ApplyMatrixFilter(const Image& image) {
     Image result(image.Height(), image.Width());

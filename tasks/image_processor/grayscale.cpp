@@ -6,8 +6,9 @@ Image GrayScale::Apply(const Image& image) {
         for (size_t j = 0; j < image.Width(); ++j) {
             int16_t gray_scale_color =
                 static_cast<int16_t>((static_cast<int64_t>(image[i][j].Green) * GREEN_COEFFICIENT +
-                                       static_cast<int64_t>(image[i][j].Red) * RED_COEFFICIENT +
-                                       static_cast<int64_t>(image[i][j].Blue) * BLUE_COEFFICIENT) / DIVISOR);
+                                      static_cast<int64_t>(image[i][j].Red) * RED_COEFFICIENT +
+                                      static_cast<int64_t>(image[i][j].Blue) * BLUE_COEFFICIENT) /
+                                     DIVISOR);
             result[i][j].Red = result[i][j].Blue = result[i][j].Green = gray_scale_color;
         }
     }

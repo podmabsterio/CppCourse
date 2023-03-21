@@ -1,6 +1,5 @@
 #include "negative.h"
 
-
 Image Negative::Apply(const Image& image) {
     Image result(image.Height(), image.Width());
     for (size_t i = 0; i < result.Height(); ++i) {

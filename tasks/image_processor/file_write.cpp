@@ -13,7 +13,7 @@ std::vector<uint8_t> NumToBytes(size_t value, size_t bytes_quantity) {
 size_t LineWithPadding(size_t line_size) {
     return line_size + (FileWrite::ALIGNMENT - line_size % FileWrite::ALIGNMENT) % FileWrite::ALIGNMENT;
 }
-}
+}  // namespace
 
 FileWrite::FileWrite(const Image& image, std::vector<uint8_t> header) : image_(&image), header_(std::move(header)) {
 }
