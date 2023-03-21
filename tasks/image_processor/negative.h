@@ -7,5 +7,5 @@ public:
     Image Apply(const Image& image) override;
 
 private:
-    inline static const int16_t COLOR_MAX = static_cast<int16_t>(255);
+    inline static const int32_t COLOR_MAX = 255;
 };
