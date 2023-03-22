@@ -173,12 +173,13 @@ ConstIteratorCowString ConstIteratorCowString::operator++(int) {
 }
 
 ConstIteratorCowString ConstIteratorCowString::operator--() {
+    --index_;
     return *this;
 }
 
 ConstIteratorCowString ConstIteratorCowString::operator--(int) {
     auto old_value = *this;
-    ++index_;
+    --index_;
     return old_value;
 }
 
