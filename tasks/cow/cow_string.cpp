@@ -125,8 +125,8 @@ bool CowString::operator==(const std::string_view other) const {
 
 CowString CowString::operator+(const CowString& other) const {
     CowString result(new SharedStr(new char[this->Size() + other.Size()], this->Size() + other.Size()));
-    std::strcpy(result.GetData(), this->GetData());
-    std::strcpy(result.GetData() + this->Size(), other.GetData());
+    std::memcpy(result.GetData(), this->GetData(), this->Size());
+    std::memcpy(result.GetData() + this->Size(), other.GetData(), other.Size());
     return result;
 }
 
@@ -139,15 +139,15 @@ size_t CowString::Size() const {
 
 CowString CowString::operator+(const std::string_view other) const {
     CowString result(new SharedStr(new char[this->Size() + other.size()], this->Size() + other.size()));
-    std::strcpy(result.GetData(), this->GetData());
-    std::strcpy(result.GetData() + this->Size(), other.data());
+    std::memcpy(result.GetData(), this->GetData(), this->Size());
+    std::memcpy(result.GetData() + this->Size(), other.data(), other.size());
     return result;
 }
 
 CowString operator+(const std::string_view left, const CowString& right) {
     CowString result(new SharedStr(new char[left.size() + right.Size()], left.size() + right.Size()));
-    std::strcpy(result.GetData(), left.data());
-    std::strcpy(result.GetData() + left.size(), right.GetData());
+    std::memcpy(result.GetData(), left.data(), left.size());
+    std::memcpy(result.GetData() + left.size(), right.GetData(), right.Size());
     return result;
 }
 
