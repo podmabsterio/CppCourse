@@ -1,5 +1,7 @@
 #include "cow_string.h"
+
 #include <cstring>
+#include <stdexcept>
 
 CowString& CowString::operator=(const CowString& other) {
     if (this == &other) {
