@@ -77,7 +77,7 @@ void CowString::ChangeElem(size_t index, char value) {
     }
     auto copy_of_buffer = buffer_;
     buffer_ = new SharedStr(new char[copy_of_buffer->Size()], copy_of_buffer->Size());
-    std::strcpy(buffer_->GetData(), copy_of_buffer->GetData());
+    std::memcpy(buffer_->GetData(), copy_of_buffer->GetData(), copy_of_buffer->Size());
     buffer_->GetData()[index] = value;
 }
 
