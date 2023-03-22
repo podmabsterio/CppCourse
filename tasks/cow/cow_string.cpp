@@ -3,17 +3,24 @@
 #include <cstring>
 #include <stdexcept>
 
+namespace {
+void Clear(SharedStr* buffer) {
+    if (buffer->IsUnique()) {
+        delete[] buffer->GetData();
+        delete buffer;
+        buffer = nullptr;
+    }
+    else {
+        (*buffer)--;
+    }
+}
+}
+
 CowString& CowString::operator=(const CowString& other) {
     if (this == &other) {
         return *this;
     }
-    if (buffer_->IsUnique()) {
-        delete[] buffer_->GetData();
-        delete buffer_;
-    }
-    else {
-        (*buffer_)--;
-    }
+    Clear(buffer_);
     buffer_ = other.buffer_;
     (*buffer_)++;
     return *this;
@@ -23,13 +30,7 @@ CowString& CowString::operator=(CowString&& other) {
     if (this == &other) {
         return *this;
     }
-    if (buffer_->IsUnique()) {
-        delete[] buffer_->GetData();
-        delete buffer_;
-    }
-    else {
-        (*buffer_)--;
-    }
+    Clear(buffer_);
     buffer_ = other.buffer_;
     other.buffer_ = nullptr;
     return *this;
@@ -39,7 +40,7 @@ CowString::CowString(const CowString& other) : buffer_(other.buffer_) {
     (*buffer_)++;
 }
 
-CowString::CowString(CowString&& other) : buffer_(other.buffer_){
+CowString::CowString(CowString&& other) : buffer_(other.buffer_) {
     other.buffer_ = nullptr;
 }
 
@@ -78,6 +79,7 @@ void CowString::ChangeElem(size_t index, char value) {
     auto copy_of_buffer = buffer_;
     buffer_ = new SharedStr(new char[copy_of_buffer->Size()], copy_of_buffer->Size());
     std::memcpy(buffer_->GetData(), copy_of_buffer->GetData(), copy_of_buffer->Size());
+    Clear(copy_of_buffer);
     buffer_->GetData()[index] = value;
 }
 
@@ -105,14 +107,7 @@ CowString::~CowString() {
     if (buffer_ == nullptr) {
         return;
     }
-    if (buffer_->IsUnique()) {
-        delete[] buffer_->GetData();
-        delete buffer_;
-        buffer_ = nullptr;
-    }
-    else {
-        (*buffer_)--;
-    }
+    Clear(buffer_);
 }
 
 bool CowString::operator==(const CowString& other) const {

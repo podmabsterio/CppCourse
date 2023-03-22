@@ -34,8 +34,6 @@ public:
 
     char* GetData() const;
 
-    void ChangeElem(size_t index, char value);
-
     const char& operator[](size_t index) const;
     ProxyChar operator[](size_t index);
 
@@ -66,6 +64,8 @@ public:
 
 private:
     explicit CowString(SharedStr* buffer);
+
+    void ChangeElem(size_t index, char value);
 
     SharedStr* buffer_;
 };
