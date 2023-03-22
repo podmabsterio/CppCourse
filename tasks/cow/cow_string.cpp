@@ -7,6 +7,13 @@ CowString& CowString::operator=(const CowString& other) {
     if (this == &other) {
         return *this;
     }
+    if (buffer_->IsUnique()) {
+        delete[] buffer_->GetData();
+        delete buffer_;
+    }
+    else {
+        (*buffer_)--;
+    }
     buffer_ = other.buffer_;
     (*buffer_)++;
     return *this;
@@ -15,6 +22,13 @@ CowString& CowString::operator=(const CowString& other) {
 CowString& CowString::operator=(CowString&& other) {
     if (this == &other) {
         return *this;
+    }
+    if (buffer_->IsUnique()) {
+        delete[] buffer_->GetData();
+        delete buffer_;
+    }
+    else {
+        (*buffer_)--;
     }
     buffer_ = other.buffer_;
     other.buffer_ = nullptr;
