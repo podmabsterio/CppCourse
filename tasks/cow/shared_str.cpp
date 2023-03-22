@@ -1,17 +1,6 @@
 #include "shared_str.h"
 
-SharedStr::~SharedStr() {
-    delete data_;
-    entity_counter_--;
-}
-
-SharedStr::SharedStr(const std::string_view& other) {
-    data_ = new char[other.size()];
-    size_ = other.size();
-    memcpy(data_, other.data(), size_);
-}
-
-char* SharedStr::GetData() const {
+char* SharedStr::GetData() {
     return data_;
 }
 
@@ -19,7 +8,7 @@ bool SharedStr::IsUnique() const {
     return entity_counter_ == 1;
 }
 
-size_t SharedStr::size() const {
+size_t& SharedStr::Size() {
     return size_;
 }
 
@@ -42,5 +31,12 @@ size_t SharedStr::operator--(int) const {
 void SharedStr::Nullify() {
     data_ = nullptr;
     size_ = 0;
-    entity_counter_ = 0;
+    entity_counter_ = 1;
+}
+
+void SharedStr::UpdateData(char* data) {
+    data_ = data;
+}
+
+SharedStr::SharedStr(char* data, size_t size) : data_(data), size_(size) {
 }
