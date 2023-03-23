@@ -23,7 +23,9 @@ int main(int argc, char** argv) {
     for (size_t i = 3; i < argc; ++i) {
         std::string filter_name = argv[i];
         if (filter_name == "-crop") {
-            controller.Feed(new Negative);
+            size_t width = std::stoull(argv[i + 1]);
+            size_t height = std::stoull(argv[i + 2]);
+            controller.Feed(new Crop(width, height));
             i += 2;
         } else if (filter_name == "-neg") {
             controller.Feed(new Negative);

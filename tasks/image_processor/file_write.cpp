@@ -1,4 +1,5 @@
 #include "file_write.h"
+#include <iostream>
 
 namespace {
 std::vector<uint8_t> NumToBytes(size_t value, size_t bytes_quantity) {
@@ -31,7 +32,7 @@ void FileWrite::RefillHeader(size_t start, size_t size, size_t value) {
 
 void FileWrite::WriteFile(const std::string& given_path) {
     file_out_.open(given_path, std::ios::binary);
-    RefillHeader(SIZE_OF_FILE_POS, 4, HEADER_SIZE + CalculateArraySize());
+    RefillHeader(SIZE_OF_FILE_POS, 4, HEADER_SIZE + BYTES_PER_PIXEL * CalculateArraySize());
     RefillHeader(SIZE_OF_ARRAY_POS, 4, image_->Width());
     RefillHeader(SIZE_OF_ARRAY_POS + 4, 4, image_->Height());
     RefillHeader(RAW_BITMAP_SIZE_POS, 4, CalculateArraySize());
