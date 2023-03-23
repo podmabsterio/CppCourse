@@ -25,6 +25,7 @@ int main(int argc, char** argv) {
         if (filter_name == "-crop") {
             size_t width = std::stoull(argv[i + 1]);
             size_t height = std::stoull(argv[i + 2]);
+            std::cout << "I got crop with values: " << width << " " << height << "\n";
             controller.Feed(new Crop(width, height));
         } else if (filter_name == "-neg") {
             controller.Feed(new Negative);
