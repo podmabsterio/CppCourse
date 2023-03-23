@@ -30,9 +30,9 @@ Image FileRead::ReadFile() {
     for (size_t i = 0; i < height; ++i) {
         size_t pixel_in_row = 0;
         for (size_t j = 0; j < width; ++j) {
-            result[i][j].Red = static_cast<int16_t>(ReadPart());
-            result[i][j].Green = static_cast<int16_t>(ReadPart());
             result[i][j].Blue = static_cast<int16_t>(ReadPart());
+            result[i][j].Green = static_cast<int16_t>(ReadPart());
+            result[i][j].Red = static_cast<int16_t>(ReadPart());
             pixel_in_row += BYTES_PER_PIXEL;
         }
         SkipPart(PaddingSize(pixel_in_row));

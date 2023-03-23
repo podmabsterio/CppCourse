@@ -19,7 +19,7 @@ FileWrite::FileWrite(const Image& image, std::vector<uint8_t> header) : image_(&
 }
 
 size_t FileWrite::CalculateArraySize() {
-    return image_->Width() * LineWithPadding(image_->Width());
+    return image_->Height() * LineWithPadding(image_->Width());
 }
 
 void FileWrite::RefillHeader(size_t start, size_t size, size_t value) {
@@ -44,9 +44,9 @@ void FileWrite::WriteFile(const std::string& given_path) {
         size_t bytes_count = 0;
         for (size_t j = 0; j < image_->Width(); ++j) {
             auto current_pixel = image_->operator[](i)[j];
-            file_out_.put(static_cast<char>(current_pixel.Red));
-            file_out_.put(static_cast<char>(current_pixel.Green));
             file_out_.put(static_cast<char>(current_pixel.Blue));
+            file_out_.put(static_cast<char>(current_pixel.Green));
+            file_out_.put(static_cast<char>(current_pixel.Red));
             bytes_count += BYTES_PER_PIXEL;
         }
 
