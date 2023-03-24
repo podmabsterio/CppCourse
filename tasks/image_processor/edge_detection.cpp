@@ -8,9 +8,9 @@ Image EdgeDetection::Apply(const Image& image) {
     for (size_t i = 0; i < result.Height(); ++i) {
         for (size_t j = 0; j < result.Width(); ++j) {
             if (result[i][j].Red > threshold_) {
-                result[i][j] = default_colors::WHITE;
-            } else {
                 result[i][j] = default_colors::BLACK;
+            } else {
+                result[i][j] = default_colors::WHITE;
             }
         }
     }
@@ -22,5 +22,5 @@ const MatrixFilter::Matrix& EdgeDetection::GetMatrix() {
 }
 
 EdgeDetection::EdgeDetection(double threshold) {
-    threshold_ = static_cast<int16_t>(threshold * UINT8_MAX);
+    threshold_ = static_cast<int16_t>(threshold * static_cast<double>(UINT8_MAX));
 }
