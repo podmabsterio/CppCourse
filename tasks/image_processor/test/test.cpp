@@ -7,8 +7,8 @@
 #include "../negative.h"
 #include "../grayscale.h"
 #include "../controller.h"
+#include "../edge_detection.h"
 #include <iostream>
 
 TEST_CASE("Main") {
-
 }

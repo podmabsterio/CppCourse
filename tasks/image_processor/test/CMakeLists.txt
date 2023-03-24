@@ -8,4 +8,5 @@ add_catch(test_image_processor
         ../image.cpp
         ../matrix_filter.cpp
         ../negative.cpp
-        ../sharpening.cpp)
+        ../sharpening.cpp
+        ../edge_detection.cpp)

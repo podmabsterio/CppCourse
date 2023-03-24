@@ -10,6 +10,6 @@ add_executable(
         sharpening.cpp
         negative.cpp
         controller.cpp
-)
+        edge_detection.cpp)
 
 add_subdirectory(test)
