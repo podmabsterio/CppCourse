@@ -6,6 +6,7 @@
 #include "grayscale.h"
 #include "negative.h"
 #include "sharpening.h"
+#include "edge_detection.h"
 
 #include <iostream>
 #include <string>
@@ -27,6 +28,10 @@ int main(int argc, char** argv) {
             size_t height = std::stoull(argv[i + 2]);
             controller.Feed(new Crop(width, height));
             i += 2;
+        } else if (filter_name == "-edge") {
+            double threshold = std::stod(argv[i + 1]);
+            controller.Feed(new EdgeDetection(threshold));
+            ++i;
         } else if (filter_name == "-neg") {
             controller.Feed(new Negative);
         } else if (filter_name == "-gs") {
