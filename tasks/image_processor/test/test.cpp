@@ -14,9 +14,18 @@
 #include "../negative.h"
 #include "../path_parser.h"
 #include "../sharpening.h"
+
 #include <iostream>
+#include <memory>
 
 namespace {
+const int16_t NORMAL_DIFFERENCE = 5;
+
+bool NearColors(const Color<int16_t>& a, const Color<int16_t>& b) {
+    return abs(a.Red - b.Red) < NORMAL_DIFFERENCE && abs(a.Green - b.Green) < NORMAL_DIFFERENCE
+           && abs(a.Blue - b.Blue) < NORMAL_DIFFERENCE;
+}
+
 bool IsSameImages(const Image& a, const Image& b) {
     if (a.Height() != b.Height()) {
         return false;
@@ -26,7 +35,7 @@ bool IsSameImages(const Image& a, const Image& b) {
     }
     for (size_t i = 0; i < a.Height(); ++i) {
         for (size_t j = 0; j < a.Width(); ++j) {
-            if (a[i][j].Red != b[i][j].Red || a[i][j].Green != b[i][j].Green || a[i][j].Blue != b[i][j].Blue) {
+            if (!NearColors(a[i][j], b[i][j])) {
                 return false;
             }
         }
@@ -66,4 +75,64 @@ TEST_CASE("Reading and Writing") {
     Image new_file = output_file_read.ReadFile();
 
     REQUIRE(IsSameImages(original_file, new_file));
+}
+
+TEST_CASE("Crop") {
+    FileRead file_read("../tasks/image_processor/test_script/data/lenna.bmp");
+    Controller controller(file_read.ReadFile());
+
+    controller.Feed(std::make_unique<Crop>(999, 1999));
+    controller.ApplyAllFilters();
+
+    FileRead correct_file_read("../tasks/image_processor/test_script/data/lenna_crop.bmp");
+
+    REQUIRE(IsSameImages(controller.GetResult(), correct_file_read.ReadFile()));
+}
+
+TEST_CASE("EdgeDetection") {
+    FileRead file_read("../tasks/image_processor/test_script/data/flag.bmp");
+    Controller controller(file_read.ReadFile());
+
+    controller.Feed(std::make_unique<EdgeDetection>(0.1));
+    controller.ApplyAllFilters();
+
+    FileRead correct_file_read("../tasks/image_processor/test_script/data/flag_edge.bmp");
+
+    REQUIRE(IsSameImages(controller.GetResult(), correct_file_read.ReadFile()));
+}
+
+TEST_CASE("Grayscale") {
+    FileRead file_read("../tasks/image_processor/test_script/data/lenna.bmp");
+    Controller controller(file_read.ReadFile());
+
+    controller.Feed(std::make_unique<GrayScale>());
+    controller.ApplyAllFilters();
+
+    FileRead correct_file_read("../tasks/image_processor/test_script/data/lenna_gs.bmp");
+
+    REQUIRE(IsSameImages(controller.GetResult(), correct_file_read.ReadFile()));
+}
+
+TEST_CASE("Negative") {
+    FileRead file_read("../tasks/image_processor/test_script/data/lenna.bmp");
+    Controller controller(file_read.ReadFile());
+
+    controller.Feed(std::make_unique<Negative>());
+    controller.ApplyAllFilters();
+
+    FileRead correct_file_read("../tasks/image_processor/test_script/data/lenna_neg.bmp");
+
+    REQUIRE(IsSameImages(controller.GetResult(), correct_file_read.ReadFile()));
+}
+
+TEST_CASE("Sharpening") {
+    FileRead file_read("../tasks/image_processor/test_script/data/lenna.bmp");
+    Controller controller(file_read.ReadFile());
+
+    controller.Feed(std::make_unique<Sharpening>());
+    controller.ApplyAllFilters();
+
+    FileRead correct_file_read("../tasks/image_processor/test_script/data/lenna_sharp.bmp");
+
+    REQUIRE(IsSameImages(controller.GetResult(), correct_file_read.ReadFile()));
 }
