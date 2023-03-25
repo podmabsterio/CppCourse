@@ -20,7 +20,7 @@ public:
     inline static const size_t PART_SIZE = 4;
     inline static const size_t SMALL_PART_SIZE = 2;
 
-    explicit FileRead(std::string& given_path);
+    explicit FileRead(const std::string& given_path);
 
     std::vector<uint8_t> GetHeader();
 

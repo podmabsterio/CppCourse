@@ -1,4 +1,5 @@
 #include "file_read.h"
+#include "image_processor_exception.h"
 
 #include <fstream>
 
@@ -10,8 +11,11 @@ size_t PaddingSize(size_t pixel_count) {
 
 Image FileRead::ReadFile() {
     fin_.open(path_, std::ios::binary);
+    if (!fin_.is_open()) {
+        throw ImageProcessorException("Path is incorrect");
+    }
     if (ReadPart(SMALL_PART_SIZE) != BM_ID) {
-        throw std::exception();
+        throw ImageProcessorException("Wrong file format");
     }
 
     SetPointerTo(POS_OF_ARRAY_POS);
@@ -21,7 +25,7 @@ Image FileRead::ReadFile() {
     size_t height = ReadPart(PART_SIZE);
     SetPointerTo(BPP_POS);
     if (ReadPart(SMALL_PART_SIZE) != BITS_PER_PIXEL) {
-        throw std::exception();
+        throw ImageProcessorException("Wrong bits per pixel value");
     }
 
     Image result(height, width);
@@ -41,7 +45,7 @@ Image FileRead::ReadFile() {
     return result;
 }
 
-FileRead::FileRead(std::string& given_path) : path_(given_path) {
+FileRead::FileRead(const std::string& given_path) : path_(given_path) {
 }
 
 size_t FileRead::ReadPart(size_t size) {

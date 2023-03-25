@@ -10,6 +10,9 @@ add_executable(
         sharpening.cpp
         negative.cpp
         controller.cpp
-        edge_detection.cpp)
+        edge_detection.cpp
+        path_parser.cpp
+        image_processor_exception.cpp
+        fill_controller.cpp)
 
 add_subdirectory(test)

@@ -7,22 +7,19 @@
 #include "sharpening.h"
 
 #include <queue>
+#include <memory>
 
 class Controller {
 public:
     explicit Controller(const Image& image);
 
-    void Feed(Filter* filter);
+    void Feed(std::unique_ptr<Filter> filter);
 
     const Image& GetResult();
-
-    ~Controller();
 
     void ApplyAllFilters();
 
 private:
     Image image_;
-    std::queue<Filter*> queue_;
-
-    void DeleteFront();
+    std::queue<std::unique_ptr<Filter>> queue_;
 };
