@@ -20,8 +20,7 @@ int main(int argc, char** argv) {
         controller.ApplyAllFilters();
         FileWrite writer(controller.GetResult(), reader.GetHeader());
         writer.WriteFile(path_parser.GetOutputPath());
-    }
-    catch (const std::exception& exception) {
+    } catch (const std::exception& exception) {
         std::cout << exception.what();
     }
 }

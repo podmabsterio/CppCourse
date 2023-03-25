@@ -18,8 +18,7 @@ void FillController(int argc, char** argv, Controller& controller, size_t begin)
             try {
                 width = std::stoull(argv[i + 1]);
                 height = std::stoull(argv[i + 2]);
-            }
-            catch (...) {
+            } catch (...) {
                 throw ImageProcessorException("Wrong arguments to crop filter");
             }
             controller.Feed(std::make_unique<Crop>(width, height));
@@ -28,8 +27,7 @@ void FillController(int argc, char** argv, Controller& controller, size_t begin)
             double threshold = 0;
             try {
                 threshold = std::stod(argv[i + 1]);
-            }
-            catch (...) {
+            } catch (...) {
                 throw ImageProcessorException("Wrong arguments to edge detection filter");
             }
             controller.Feed(std::make_unique<EdgeDetection>(threshold));
